@@ -38,6 +38,7 @@ A file named Student_mark_sys.xlsx will be created in the same directory.
 
 The first row is the title.
 The second row contains column headers like Roll No, Name, Marks, Grade, and Pass/Fail.
+![image](https://github.com/user-attachments/assets/4f7c8844-b0a0-4458-8f65-54b9c02885cc)
 
 📸 Sample Menu Output
 
