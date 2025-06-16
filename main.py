@@ -2,48 +2,45 @@ import openpyxl
 from openpyxl.styles import Font, Alignment
 import os
 
-# a raw string so back-slashes don’t get treated as escapes
 file_name = r"Student_mark_sys.xlsx"
 
 def excel():
-        if not os.path.exists(file_name):
-            wb = openpyxl.Workbook()
-            ws = wb.active
-            ws.title = "Student Marks"
-        else:
-            wb = openpyxl.load_workbook(file_name)
+    if not os.path.exists(file_name):
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Student Marks"
+    else:
+        wb = openpyxl.load_workbook(file_name)
 
-        if "Student Marks" in wb.sheetnames:
-            ws = wb["Student Marks"]
-        else:
-            ws = wb.active
-            ws.title = "Student Marks"
+    if "Student Marks" in wb.sheetnames:
+        ws = wb["Student Marks"]
+    else:
+        ws = wb.active
+        ws.title = "Student Marks"
 
-        if ws.cell(row=1, column=1).value != "Student Marks Management System":
-            ws.merge_cells("A1:K1")
-            ws["A1"] = "Student Marks Management System"
-            ws["A1"].font = Font(size=20, bold=True)
-            ws["A1"].alignment = Alignment(horizontal="center")
+    if ws.cell(row=1, column=1).value != "Student Marks Management System":
+        ws.merge_cells("A1:K1")
+        ws["A1"] = "Student Marks Management System"
+        ws["A1"].font = Font(size=20, bold=True)
+        ws["A1"].alignment = Alignment(horizontal="center")
 
-        expected_headers = [
-            "Roll No", "Name", "Maths", "OS", "English",
-            "Database Fundamentals", "Programming Skills",
-            "Total", "Percentage", "Grade", "Pass/Fail"
-        ]
-        if ws.cell(row=2, column=1).value != expected_headers[0]:
-            for col_num, header in enumerate(expected_headers, start=1):
-                ws.cell(row=2, column=col_num, value=header)
+    expected_headers = [
+        "Roll No", "Name", "Maths", "OS", "English",
+        "Database Fundamentals", "Programming Skills",
+        "Total", "Percentage", "Grade", "Pass/Fail"
+    ]
+    if ws.cell(row=2, column=1).value != expected_headers[0]:
+        for col_num, header in enumerate(expected_headers, start=1):
+            ws.cell(row=2, column=col_num, value=header)
 
-        ws.freeze_panes = "A3"
-        wb.save(file_name)
-
+    ws.freeze_panes = "A3"
+    wb.save(file_name)
 
 def open_excel(wb, file_name):
     try:
         wb.save(file_name)
     except PermissionError:
         print("Permission denied: Please make sure the Excel file is closed.")
-
 
 def calculation(marks_list, passing=33):
     if any(mark < passing for mark in marks_list):
@@ -107,11 +104,16 @@ def update_student_marks(roll_no):
             if str(cell_roll) == roll_no:
                 print(f"Updating marks for Roll No: {roll_no}")
 
-                maths = input("Enter new Maths marks (leave blank to keep current): ")
-                os_mark = input("Enter new OS marks (leave blank to keep current): ")
-                eng = input("Enter new English marks (leave blank to keep current): ")
-                db_fund = input("Enter new Database Fundamentals marks (leave blank to keep current): ")
-                prog_skill = input("Enter new Programming Skills marks (leave blank to keep current): ")
+                print("Enter new Maths marks (leave blank to keep current): ", end="")
+                maths = input()
+                print("Enter new OS marks (leave blank to keep current): ", end="")
+                os_mark = input()
+                print("Enter new English marks (leave blank to keep current): ", end="")
+                eng = input()
+                print("Enter new Database Fundamentals marks (leave blank to keep current): ", end="")
+                db_fund = input()
+                print("Enter new Programming Skills marks (leave blank to keep current): ", end="")
+                prog_skill = input()
 
                 current_marks = [
                     ws.cell(row=row, column=3).value,
@@ -165,7 +167,6 @@ def display_students():
     for row in ws.iter_rows(min_row=3, values_only=True):
         print(row)
 
-
 def main():
     try:
         excel()
@@ -182,20 +183,29 @@ def main():
         print("3. Display All Students")
         print("4. Exit")
 
-        choice = input("Enter your choice: ")
+        print("Enter your choice: ", end="")
+        choice = input()
 
         if choice == "1":
-            roll_no = input("Enter roll number: ")
-            name = input("Enter name: ")
-            maths = input("Enter Maths marks: ")
-            os_mark = input("Enter OS marks: ")
-            eng = input("Enter English marks: ")
-            db_fund = input("Enter Database Fundamentals marks: ")
-            prog_skill = input("Enter Programming Skills marks: ")
+            print("Enter roll number: ", end="")
+            roll_no = input()
+            print("Enter name: ", end="")
+            name = input()
+            print("Enter Maths marks: ", end="")
+            maths = input()
+            print("Enter OS marks: ", end="")
+            os_mark = input()
+            print("Enter English marks: ", end="")
+            eng = input()
+            print("Enter Database Fundamentals marks: ", end="")
+            db_fund = input()
+            print("Enter Programming Skills marks: ", end="")
+            prog_skill = input()
             add_student(roll_no, name, maths, os_mark, eng, db_fund, prog_skill)
 
         elif choice == "2":
-            roll_no = input("Enter roll number to update marks: ")
+            print("Enter roll number to update marks: ", end="")
+            roll_no = input()
             update_student_marks(roll_no)
 
         elif choice == "3":
