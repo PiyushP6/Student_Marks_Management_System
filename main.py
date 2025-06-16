@@ -4,6 +4,12 @@ import os
 
 file_name = r"Student_mark_sys.xlsx"
 
+def read_input(prompt):
+    print(prompt, end="")
+    value = input()
+    print(value + "\n")
+    return value
+
 def excel():
     if not os.path.exists(file_name):
         wb = openpyxl.Workbook()
@@ -35,12 +41,6 @@ def excel():
 
     ws.freeze_panes = "A3"
     wb.save(file_name)
-
-def open_excel(wb, file_name):
-    try:
-        wb.save(file_name)
-    except PermissionError:
-        print("Permission denied: Please make sure the Excel file is closed.")
 
 def calculation(marks_list, passing=33):
     if any(mark < passing for mark in marks_list):
@@ -102,18 +102,13 @@ def update_student_marks(roll_no):
         for row in range(3, ws.max_row + 1):
             cell_roll = ws.cell(row=row, column=1).value
             if str(cell_roll) == roll_no:
-                print(f"Updating marks for Roll No: {roll_no}")
+                print(f"Updating marks for Roll No: {roll_no}\n")
 
-                print("Enter new Maths marks (leave blank to keep current): ", end="")
-                maths = input()
-                print("Enter new OS marks (leave blank to keep current): ", end="")
-                os_mark = input()
-                print("Enter new English marks (leave blank to keep current): ", end="")
-                eng = input()
-                print("Enter new Database Fundamentals marks (leave blank to keep current): ", end="")
-                db_fund = input()
-                print("Enter new Programming Skills marks (leave blank to keep current): ", end="")
-                prog_skill = input()
+                maths = read_input("Enter new Maths marks (leave blank to keep current): ")
+                os_mark = read_input("Enter new OS marks (leave blank to keep current): ")
+                eng = read_input("Enter new English marks (leave blank to keep current): ")
+                db_fund = read_input("Enter new Database Fundamentals marks (leave blank to keep current): ")
+                prog_skill = read_input("Enter new Programming Skills marks (leave blank to keep current): ")
 
                 current_marks = [
                     ws.cell(row=row, column=3).value,
@@ -174,38 +169,29 @@ def main():
         print(f"Permission denied: Please close '{file_name}' if it is open in Excel.")
         return 
 
-    print("Welcome to the Student Marks Management System")
+    print("Welcome to the Student Marks Management System\n")
 
     while True:
-        print("\nStudent Marks System")
+        print("Student Marks System")
         print("1. Add Student")
         print("2. Update Student Marks")
         print("3. Display All Students")
         print("4. Exit")
 
-        print("Enter your choice: ", end="")
-        choice = input()
+        choice = read_input("Enter your choice: ")
 
         if choice == "1":
-            print("Enter roll number: ", end="")
-            roll_no = input()
-            print("Enter name: ", end="")
-            name = input()
-            print("Enter Maths marks: ", end="")
-            maths = input()
-            print("Enter OS marks: ", end="")
-            os_mark = input()
-            print("Enter English marks: ", end="")
-            eng = input()
-            print("Enter Database Fundamentals marks: ", end="")
-            db_fund = input()
-            print("Enter Programming Skills marks: ", end="")
-            prog_skill = input()
+            roll_no = read_input("Enter roll number: ")
+            name = read_input("Enter name: ")
+            maths = read_input("Enter Maths marks: ")
+            os_mark = read_input("Enter OS marks: ")
+            eng = read_input("Enter English marks: ")
+            db_fund = read_input("Enter Database Fundamentals marks: ")
+            prog_skill = read_input("Enter Programming Skills marks: ")
             add_student(roll_no, name, maths, os_mark, eng, db_fund, prog_skill)
 
         elif choice == "2":
-            print("Enter roll number to update marks: ", end="")
-            roll_no = input()
+            roll_no = read_input("Enter roll number to update marks: ")
             update_student_marks(roll_no)
 
         elif choice == "3":
